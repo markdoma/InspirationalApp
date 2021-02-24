@@ -5,7 +5,10 @@ import "./App.css";
 import HomePage from "./Pages/Homepage/Homepage.component";
 import ShopPage from "./Pages/Shop/shop.component";
 import Header from "./Components/header/header.component";
-import { auth } from "../src/firebase/firebase.utils";
+import {
+  auth,
+  createUserProfileDocument,
+} from "../src/firebase/firebase.utils";
 import SignInAndSignUpPage from "./Pages/sign-in-and-sign-out/sign-in-and-sign-out.component";
 
 class App extends React.Component {
@@ -19,9 +22,9 @@ class App extends React.Component {
   unsubsribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubsribeFromAuth = auth.onAuthStateChanged((user) => {
-      this.setState({ currentUser: user });
-      console.log(user);
+    this.unsubsribeFromAuth = auth.onAuthStateChanged(async (user) => {
+      //this.setState({ currentUser: user });
+      createUserProfileDocument(user);
     });
   }
 
